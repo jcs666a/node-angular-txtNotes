@@ -1,6 +1,7 @@
 const http = require('http');
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 
 const publicDir = path.join(__dirname, 'public/dist/txtnotes');
 
@@ -11,6 +12,7 @@ const PORT = '3001';
 
 // Configuración de la app
 app.use(express.json());
+app.use(cors());
 
 // Rutas
 app.use(require('./routes'));

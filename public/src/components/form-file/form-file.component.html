@@ -1,0 +1,19 @@
+
+<div class="form">
+
+    <div class="row">
+      <input type="text" placeholder="Título (max 20 caracteres)" (keyup)="resetError()" [(ngModel)]="title" maxlength="20">
+    </div>
+
+    <div class="row">
+      <textarea placeholder="Conetnido de tu nota" [(ngModel)]="content"></textarea>
+    </div>
+
+    <div class="err" *ngIf="errorMsg !== ''">{{ errorMsg }}</div>
+
+    <div class="nav">
+        <button (click)="onSave()">Guardar</button>
+        <button (click)="onCancel()">Cancelar</button>
+    </div>
+
+</div>

@@ -1,0 +1,21 @@
+
+<div class="list">
+
+    <div class="row" *ngIf="errorMessage !== ''">
+      <div>{{ errorMessage }}</div>
+    </div>
+
+    <div *ngIf="files$ | async as files">
+
+      <div class="row" *ngFor="let file of files">
+        <div>{{ file.fileName }}</div>
+        <div>{{ file.fileDate }}</div>
+        <div>
+          <a href="#" (click)="onEddit(file.key)" class="rounded-nav">Editar</a>
+          <a href="#" (click)="onDelete(file.key)" class="rounded-nav">Eliminar</a>
+        </div>
+      </div>
+
+    </div>
+
+</div>

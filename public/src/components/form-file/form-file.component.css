@@ -1,0 +1,47 @@
+
+.form {
+    max-width: 600px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 50px auto;
+}
+
+.row {
+    margin: 10px 0;
+}
+
+.row:last-child {
+    margin-top: 30px;
+}
+
+input, textarea {
+    display: block;
+    width: calc(100% - 10px);
+}
+
+input {
+    display: block;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+textarea {
+    height: 200px;
+    padding: 10px;
+    width: calc(100% - 22px);
+}
+
+.nav {
+    margin: 20px 0 10px;
+}
+
+button:first-child {
+    margin-right: 10px;
+}
+
+.err {
+    background-color: red;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px;
+}

@@ -2,11 +2,9 @@ const express = require('express');
 const apiControler = express.Router();
 const path = require('path');
 const fs = require('fs');
-
 const endpoint = '/api/notes';
 const txtDir = path.join(__dirname, 'txtDir');
-
-// id, combinación de timestamp + titulo en base64
+const { getFileNameDate, createFile } = require('./helpers');
 
 apiControler.get(`${endpoint}/:id?`, async (req, res) => {
     const id = req.params.id;
@@ -15,14 +13,23 @@ apiControler.get(`${endpoint}/:id?`, async (req, res) => {
 
     if(id) {
         try {
-            files.push(fs.readFileSync(`${txtDir}/${id}.txt`, 'utf8'));
+            const { fileName: fileNameA } = getFileNameDate(id);
+            files.push({
+                fileName: fileNameA,
+                fileContent: fs.readFileSync(`${txtDir}/${id}`, 'utf8')
+            });
         } catch (err) {
             // console.log(err);
             status = 500;
         }
     } else {
         fs.readdirSync(txtDir).forEach(file => {
-            files.push(file);
+            const { fileName, fileDate } = getFileNameDate(file);
+            files.push({
+                fileName,
+                fileDate,
+                key: file
+            });
         });
     }
 
@@ -32,26 +39,29 @@ apiControler.get(`${endpoint}/:id?`, async (req, res) => {
 });
 
 apiControler.post(`${endpoint}`, async (req, res) => {
-    const {
-        title, content
-    } = req.body;
-
-    console.log(title, content);
-    res.status(200).send({status: 'ok'});
+    const { title, content } = req.body;
+    createFile(res, title, content);
 });
 
 apiControler.put(`${endpoint}/:id?`, async (req, res) => {
     const id = req.params.id;
-    console.log('put: ', id);
-
-    res.status(200).send({status: 'ok'});
+    const { title, content } = req.body;
+    try {
+        fs.unlinkSync(`${txtDir}/${id}`);
+        createFile(res, title, content);
+    } catch(err) {
+        res.status(500).send({status: err});
+    }
 });
 
 apiControler.delete(`${endpoint}/:id?`, async (req, res) => {
     const id = req.params.id;
-    console.log('delete: ', id);
-
-    res.status(200).send({status: 'ok'});
+    try {
+        fs.unlinkSync(`${txtDir}/${id}`);
+        res.status(200).send({status: 'ok'});
+    } catch(err) {
+        res.status(500).send({status: err});
+    }
 });
 
 module.exports = apiControler;

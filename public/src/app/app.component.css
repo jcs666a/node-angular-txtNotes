@@ -1,0 +1,20 @@
+
+.toolbar {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1976d2;
+    color: white;
+    font-weight: 600;
+}
+
+.toolbar span {
+    display: block;
+    margin: 0 16px;
+}
+
+.tab-bar {
+    display: flex;
+    justify-content: center;
+}
